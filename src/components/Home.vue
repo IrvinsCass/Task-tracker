@@ -2,34 +2,42 @@
   .container
     section
       h1.home-header Home
-    section.container-fluid
-      .task-list
-        .task-item(
-          v-for="task in tasks"
-          :key="task.id"
-          :class="{ completed: task.completed }"
+      .add-task-form.container-fluid
+        input.form-control.add-task-form__element.add-task-form__input(
+          type="text"
+          placeholder="Things need to be done"
+          v-model="taskTitle"
         )
-          .card
-            h5.card-header {{ task.title }}
-              span.button-close
-                i.fas.fa-times
-            .card-body
-              .card-body__text
-                span.form-check
-                  input(
-                    type='checkbox'
-                    v-model="task.completed"
-                  )
-                p {{ task.description }}
-              .card-body__label
-                .urgency-label(
-                  v-if="task.urgencyLevel == 1"
-                )
-                  span.badge.badge-warning Attention
-                .urgency-label(
-                  v-else="task.urgencyLevel == 2"
-                )
-                  span.badge.badge-danger Warning
+        textarea.form-control.add-task-form__element.add-task-form__textarea(
+          rows='3'
+          placeholder="Any details you shouldn't forget?"
+          v-model="taskDescription"
+        )
+        .container-fluid.add-task-form__element.add-task-form__footer
+          .radio-wrapper
+            h5 Status:
+            input(
+              type="radio"
+              id="attention"
+              value="attention"
+              v-model="taskUrgencyLevel"
+            )
+            label(
+              for="attention"
+            ) Attention
+            input(
+              type="radio"
+              id="warning"
+              value="warning"
+              v-model="taskUrgencyLevel"
+            )
+            label(
+              for="warning"
+            ) Warning
+          button.btn.btn-primary(
+            type="button"
+            @click="newTask"
+            ) Add task
 
 </template>
 
@@ -37,56 +45,53 @@
 export default {
   data () {
     return {
-      tasks: [
-        {
-          'id': 1,
-          'title': 'Clean table',
-          'description': 'Table dirty like you mom, clean it now fag!',
-          'urgencyLevel': 1,
-          'completed': false,
-          'editing': false
-        },
-        {
-          'id': 2,
-          'title': 'Pet a cat',
-          'description': 'Or he will eat your face at you sleep',
-          'urgencyLevel': 2,
-          'completed': false,
-          'editing': false
-        }
-      ]
+      taskTitle: '',
+      taskDescription: '',
+      taskUrgencyLevel: ''
+    }
+  },
+  methods: {
+    newTask () {
+      if (!this.taskTitle) {
+        return
+      }
+      const task = ({
+        title: this.taskTitle,
+        description: this.taskDescription,
+        urgencyLevel: this.taskUrgencyLevel,
+        completed: false,
+        editing: false
+      })
+      this.$store.dispatch('newTask', task)
+
+      this.taskTitle = ''
+      this.taskDescription = ''
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.home-header
-  margin-bottom 15px
-
-.task-item
-  margin-bottom 15px
-  &:last-child
-    margin-bottom 0
-
-.card-header
-  display flex
-  justify-content space-between
-  i
-    cursor pointer
-    &:hover
-      color gray
-
-.card-body
-  &__text
+.add-task-form
+  margin 15px 0 35px 0
+  &__element
+    margin-bottom 15px
+  &__textarea
+    resize none
+  &__footer
+    display flex
+    justify-content space-between
+    input
+      margin-left 15px
+    label
+      margin-left 5px
+      margin-bottom 0
+      user-select: none
+      cursor pointer
+  .radio-wrapper
     display flex
     align-items center
-    margin-bottom 8px
-    p
-      margin-bottom 0
-    span
-      margin 0
-      padding 0
-      margin-right 8px
-      padding-top 2px
+    h5
+      margin-bottom 5px
+
 </style>
