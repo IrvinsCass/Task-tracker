@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    header.container
+    header.container-fluid
       span.navbar-brand.mb-0.h1 Task tracker
       .icon-burger
         i.fas.fa-align-justify(
@@ -37,8 +37,9 @@ export default {
       menuShow: false,
       linkMenu: [
         {title: 'Home', url: '/'},
-        {title: 'Login', url: '/login'},
-        {title: 'Registration', url: '/registration'}
+        {title: 'Tasks', url: '/tasks'},
+        {title: 'Sign in', url: '/login'},
+        {title: 'Sign up', url: '/registration'}
       ]
     }
   }
@@ -57,8 +58,9 @@ header
   margin-bottom 20px
   span
     text-transform uppercase
+    padding-left 25px
   .navbar
-    @media screen and (max-width: 480px)
+    @media screen and (max-width: 550px)
       display none
   .navbar-hidden
     position absolute
@@ -71,6 +73,6 @@ header
     display none
     font-size 22px
     margin-right 20px
-    @media screen and (max-width: 480px)
+    @media screen and (max-width: 550px)
       display block
 </style>

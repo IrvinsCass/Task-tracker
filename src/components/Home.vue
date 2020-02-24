@@ -15,6 +15,7 @@
         )
         .container-fluid.add-task-form__element.add-task-form__footer
           .radio-wrapper
+            h5 Status:
             input(
               type="radio"
               id="attention"
@@ -37,34 +38,6 @@
             type="button"
             @click="newTask"
             ) Add task
-    section.container-fluid
-      .task-list
-        .task-item(
-          v-for="task in tasks"
-          :key="task.id"
-          :class="{ completed: task.completed }"
-        )
-          .card
-            h5.card-header {{ task.title }}
-              span.button-close
-                i.fas.fa-times
-            .card-body
-              .card-body__text
-                span.form-check
-                  input(
-                    type='checkbox'
-                    v-model="task.completed"
-                  )
-                p {{ task.description }}
-              .card-body__label
-                .urgency-label(
-                  v-if="task.urgencyLevel == 'attention'"
-                )
-                  span.badge.badge-warning Attention
-                .urgency-label(
-                  v-else="task.urgencyLevel == 'warning'"
-                )
-                  span.badge.badge-danger Warning
 
 </template>
 
@@ -73,27 +46,8 @@ export default {
   data () {
     return {
       taskTitle: '',
-      taskId: 3,
       taskDescription: '',
-      taskUrgencyLevel: '',
-      tasks: [
-        {
-          'id': 1,
-          'title': 'Clean table',
-          'description': 'Table dirty like you mom, clean it now fag!',
-          'urgencyLevel': 'attention',
-          'completed': false,
-          'editing': false
-        },
-        {
-          'id': 2,
-          'title': 'Pet a cat',
-          'description': 'Or he will eat your face at you sleep',
-          'urgencyLevel': 'warning',
-          'completed': false,
-          'editing': false
-        }
-      ]
+      taskUrgencyLevel: ''
     }
   },
   methods: {
@@ -101,16 +55,15 @@ export default {
       if (!this.taskTitle) {
         return
       }
-      this.tasks.push({
+      const task = ({
         title: this.taskTitle,
-        id: this.taskId,
         description: this.taskDescription,
         urgencyLevel: this.taskUrgencyLevel,
         completed: false,
         editing: false
       })
+      this.$store.dispatch('newTask', task)
 
-      this.taskId++
       this.taskTitle = ''
       this.taskDescription = ''
     }
@@ -132,32 +85,13 @@ export default {
       margin-left 15px
     label
       margin-left 5px
+      margin-bottom 0
       user-select: none
       cursor pointer
-
-.task-item
-  margin-bottom 15px
-  &:last-child
-    margin-bottom 0
-
-.card-header
-  display flex
-  justify-content space-between
-  i
-    cursor pointer
-    &:hover
-      color gray
-
-.card-body
-  &__text
+  .radio-wrapper
     display flex
     align-items center
-    margin-bottom 8px
-    p
-      margin-bottom 0
-    span
-      margin 0
-      padding 0
-      margin-right 8px
-      padding-top 2px
+    h5
+      margin-bottom 5px
+
 </style>

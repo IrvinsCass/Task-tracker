@@ -1,7 +1,7 @@
 <template lang="pug">
   .container
     section
-      h1 Login
+      h1 Sign in
 </template>
 
 <script>
