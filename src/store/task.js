@@ -6,19 +6,26 @@ export default {
         'title': 'Create site',
         'description': 'Use Vue. js and Bootstrap',
         'urgencyLevel': 'attention',
-        'completed': false
+        'completed': true
       },
       {
         'id': 1,
-        'title': 'Publish site on Firebase',
-        'description': 'Dont forget create database and Auth!',
+        'title': 'Create Auth functions',
+        'description': 'Database incoming!',
         'urgencyLevel': 'attention',
         'completed': false
       },
       {
         'id': 2,
-        'title': 'Pet your cat',
-        'description': 'He totally deserve it',
+        'title': 'Make validations',
+        'description': 'All input forms must be fill',
+        'urgencyLevel': 'warning',
+        'completed': false
+      },
+      {
+        'id': 3,
+        'title': 'Make other fancy things',
+        'description': 'Everything can be improved',
         'urgencyLevel': 'warning',
         'completed': false
       }

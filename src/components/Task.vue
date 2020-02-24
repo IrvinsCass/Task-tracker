@@ -21,12 +21,15 @@
             .card-body
               .card-body__text
                 p {{ task.description }}
-                .button-wrapper(
-                  v-if="task.completed == false"
-                )
+                .button-wrapper
                   button.btn.btn-success(
-                    @click="task.completed = !task.completed"
+                    v-if="task.completed == false"
+                    @click="task.completed = true"
                     ) Done
+                  span.check-success(
+                    v-else="task.completed"
+                  )
+                    i.far.fa-check-circle
               .card-body__label
                 .urgency-label(
                   v-if="task.urgencyLevel == 'attention'"
@@ -100,4 +103,7 @@ export default {
       padding 0
       margin-right 8px
       padding-top 2px
+  .check-success
+    font-size 40px
+    color green
 </style>
