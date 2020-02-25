@@ -9,15 +9,15 @@
           button.btn.btn-secondary(@click='filter="all"') All tasks
     section.container-fluid
       .task-list
-        .task-item(
+        .task-item.shadow.p-3.mb-5.bg-white.rounded(
           v-for="task in tasksFilter"
           :key="task.id"
           :class="{ completed: task.completed }"
         )
           .card
             h5.card-header {{ task.title }}
-              span.button-close
-                i.fas.fa-times
+              button.close(type='button', aria-label='Close')
+                span(aria-hidden='true') ×
             .card-body
               .card-body__text
                 p {{ task.description }}
@@ -85,10 +85,12 @@ export default {
 .card-header
   display flex
   justify-content space-between
-  i
+  .close
     cursor pointer
     &:hover
       color gray
+    &:focus
+      outline 0
 
 .card-body
   &__text
